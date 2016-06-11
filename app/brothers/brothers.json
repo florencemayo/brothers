@@ -1,0 +1,44 @@
+[
+	{
+	 "id": "brother1", 
+	 "name": "Florence Mayo",
+     "age": 27,
+	 "email":"florencemayo11@gmail.com",
+	 "imageUrl": "img/brother1.jpg"
+	},
+	{
+	 "id": "brother2",
+	 "name": "Steve",
+	 "age": 60,
+	 "email":"steve@gmail.com",
+	 "imageUrl": "img/brother2.jpg"
+	 },
+	 {
+	 "id": "brother3",
+	 "name": "Babu Lanta",
+	 "age": 30,
+	 "email":"babu@gmail.com",
+	 "imageUrl": "img/brother3.jpg"
+	 },
+	 {
+	 "id": "brother4",
+	 "name": "Big dream",
+	 "age": 15,
+	 "email":"brother4@gmail.com",
+	 "imageUrl": "img/brother4.jpg"
+	 },
+	 {
+	 "id": "brother5",
+	 "name": "Wa Ukweli",
+	 "age": 20,
+	 "email":"brother5@gmail.com",
+	 "imageUrl": "img/brother5.jpg"
+	 },
+	 {
+	 "id": "brother6",
+	 "name": "Mnama",
+	 "age": 10,
+	 "email":"brother6@gmail.com",
+	 "imageUrl": "img/brother6.png"
+	 } 
+]

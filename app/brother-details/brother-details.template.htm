@@ -1,0 +1,19 @@
+<h2>{{$ctrl.brother.name}}</h2>
+
+<div class="brother-images">
+	<img ng-src="{{img}}" 
+		 class="brother"
+	     ng-class="{selected: img = $ctrl.mainImageUrl}"
+	     ng-repeat ="img in $ctrl.brother.images"
+	 />
+</div>
+<p>{{$ctrl.brother.description}}</p>
+
+<h3> Click to view</h3>
+<ul class="brother-thumbs">
+	<li ng-repeat="img in $ctrl.brother.images">
+		<img ng-src="{{img}}" 
+			 ng-click="$ctrl.setImage(img)"
+	    />
+	</li>
+</ul>

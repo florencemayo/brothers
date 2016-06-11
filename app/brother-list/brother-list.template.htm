@@ -1,0 +1,47 @@
+<div class="container-fluid">
+	<div class="row top-row">
+		<div class="col-md-6 search-query">
+			    <!--create a search query -->
+			<div class="input-group">
+				<span class="input-group-addon">Search </span> 
+				<input ng-model="$ctrl.query" class="form-control"/>
+			</div>
+		</div>
+		<div class="col-md-6 sort-form">
+			<div class="input-group">
+				<span class="input-group-addon">Sort by </span>
+				<select ng-model="$ctrl.categories" class="form-control">
+					<option value="name">Alphabetical</option> <!-- name-->
+					<option value="email">Best brothers</option> <!-- best borthers-->
+					<option value="age">Number of Borthers</option> <!-- number of brothers-->
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">	
+			<!-- Body content -->
+
+			<button class="listing-button btn btn-primary" 
+			        ng-click="addBrother =! addBrother" 
+			        ng-show="!addBrother" >Add a brother
+			</button>
+			
+			<button class="listing-button btn btn-danger" 
+			        ng-click="addBrother =! addBrother" 
+			        ng-show="addBrother">Close
+			</button>
+
+			<!-- add a brother-->
+			<brother-manage ng-if="addBrother"></brother-manage>
+			
+			<ul class="brothers">
+				<li class="thumbnail" ng-repeat="brother in $ctrl.brothers | filter:$ctrl.query | orderBy:$ctrl.categories">
+					<a href="#!/brothers/{{brother.id}}" class="thumb">
+					  <img ng-src="{{brother.imageUrl}}" alt="{{brother.name}}" />
+					</a>
+					<a href="#!/brothers/{{brother.id}}">Name: {{brother.name}}</a>
+				<li>
+			</ul>
+	</div>
+</div>	

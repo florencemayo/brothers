@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="eng" ng-app="ng-brothers">
+<head>
+	<title>Brotherhood</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css"  href="styles/style.css">
+   
+  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" >
+  
+   <!-- minified JavaScript 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
+  
+  <!-- Bower components-->
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="../bower_components/angular-route/angular-route.js"></script>
+  <script src="../bower_components/angular-resource/angular-resource.js"></script>
+
+  <!-- Modules & Configs & services-->
+  <script src="app.module.js"></script>
+  <script src="app.config.js"></script>
+  <script src="core/brother.module.js"></script>
+  <script src="core/core.module.js"></script>
+  <script src="core/brother.service.js"></script>
+  <script src="brother-list/brother-list.module.js"></script>
+  <script src="brother-details/brother-details.module.js"></script>
+  <script src="brother-manage/brother-manage.module.js"></script>
+  
+  <!-- Components-->
+  <script src="brother-list/brother-list.component.js"></script>
+  <script src="brother-details/brother-details.component.js"></script>
+  <script src="brother-manage/brother-manage.component.js"></script>
+
+  
+</head>
+<body>
+	<div  class="container">
+     <h1 align="center">  Welcome to the brotherhood society </h1>
+      
+     <div ng-view></div>
+
+  </div>
+</body>
+</html>

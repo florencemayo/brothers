@@ -1,0 +1,51 @@
+<form class="form-horizontal" role="form">
+	<div class="container">
+		<div class="listing-form-row row">
+			<h3> Add a Brother </h3>
+			<div class="col-sm-4">
+				<div class="input-group">
+					<span class="input-group-addon" for="name">Full name</span>
+					<input 
+						type="firstname" 
+						class="form-control" 
+						id="firstname" 
+						placeholder="Enter first name"
+						ng-model="newBrother.full_name">
+				</div>			
+			</div>
+		
+			<div class="col-sm-4">
+				<div class="input-group">
+					<span class="input-group-addon" for="lastname">Age</span>
+					<input 
+						type="age" 
+						class="form-control" 
+						id="age" 
+						placeholder="Enter age"
+						ng-model="newBrother.age">
+				</div>
+		    </div>
+		        
+
+			<div class="col-sm-4">
+				<div class="input-group">
+					<span class="input-group-addon" for="email">Email</span>
+					<input 
+					 	type="email" 
+					 	class="form-control" 
+					 	id="email" 
+					 	placeholder="Enter email"
+					 	ng-model="newBrother.email"
+				</div>
+		    </div>
+		    
+		</div>
+		<pre> {{newBrother | json}}</pre>
+
+		    <button 
+		    	type="signup" 
+		    	class="listing-button btn btn-primary"
+		    	ng-click="addBrother(newBrother)">Add
+		    </button>
+    </div>
+</form>	
