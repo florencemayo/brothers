@@ -1,16 +1,17 @@
 <div class="container-fluid">
 	<div class="row top-row">
+		<!--create a search query -->
 		<div class="col-md-6 search-query">
-			    <!--create a search query -->
 			<div class="input-group">
 				<span class="input-group-addon">Search </span> 
-				<input ng-model="$ctrl.query" class="form-control"/>
+				<input ng-model="$scope.query" class="form-control"/>
 			</div>
 		</div>
+		<!--create a sort area -->
 		<div class="col-md-6 sort-form">
 			<div class="input-group">
 				<span class="input-group-addon">Sort by </span>
-				<select ng-model="$ctrl.categories" class="form-control">
+				<select ng-model="$scope.categories" class="form-control">
 					<option value="name">Alphabetical</option> <!-- name-->
 					<option value="email">Best brothers</option> <!-- best borthers-->
 					<option value="age">Number of Borthers</option> <!-- number of brothers-->
@@ -20,28 +21,170 @@
 	</div>
 
 	<div class="row">	
-			<!-- Body content -->
-
-			<button class="listing-button btn btn-primary" 
+			<!-- Two buttons to show/hide add a brother panel-->
+			<button class="size-button btn btn-primary" 
 			        ng-click="addBrother =! addBrother" 
 			        ng-show="!addBrother" >Add a brother
 			</button>
-			
-			<button class="listing-button btn btn-danger" 
-			        ng-click="addBrother =! addBrother" 
-			        ng-show="addBrother">Close
-			</button>
 
-			<!-- add a brother-->
-			<brother-manage ng-if="addBrother"></brother-manage>
+			<form class="form-horizontal" role="form">
+				<div class="container">
+					<div class="listing-form-row row">
+                    <!--SHOW THE ADD WINDOW WHEN ADD BUTTON CLICKED BEGIN-->
+					<!-- ADD A NEW OBJECT __BEGIN-->	
+					<div ng-show="addBrother ">
+						<h3> Add a Brother </h3>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<span class="input-group-addon" for="name">Full name</span>
+								<input 
+									type="firstname" 
+									class="form-control" 
+									id="firstname" 
+									placeholder="Enter full name"
+									ng-model="newBrother.name">
+							</div>			
+						</div>
+					
+						<div class="col-sm-4">
+							<div class="input-group">
+								<span class="input-group-addon" for="age">Age</span>
+								<input 
+									type="age" 
+									class="form-control" 
+									id="age" 
+									placeholder="Enter age"
+									ng-model="newBrother.age">
+							</div>
+					    </div>
+					        
+
+						<div class="col-sm-4">
+							<div class="input-group">
+								<span class="input-group-addon" for="email">Email</span>
+								<input 
+								 	type="email" 
+								 	class="form-control" 
+								 	id="email" 
+								 	placeholder="Enter email"
+								 	ng-model="newBrother.email">
+							</div>
+					    </div>
+					
+
+						<pre> {{newBrother | json}}</pre>
+
+					    <button 
+					    	type="save" 
+					    	class="size-button btn btn-primary"
+					    	ng-click="inputBrother(newBrother)"
+					    	ng-show="!editBrother">Save
+					    </button>
+
+					    <button class="size-button btn btn-danger" 
+			        			ng-click="addBrother =! addBrother" 
+			        			ng-show="addBrother">Close
+						</button>
+					</div>
+				<!-- ADD A NEW OBJECT___END-->
+			    <!--SHOW THE ADD WINDOW WHEN ADD BUTTON CLICKED END-->
+
+			    <!--SHOW THE EDIT WINDOW WHEN EDIT BUTTON CLICKED BEGIN-->
+			    <!-- EDIT A NEW OBJECT__BEGIN-->
+					<div ng-show="editBrother">
+						<h3> Edit a Brother </h3>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<span class="input-group-addon" for="name">Full name</span>
+								<input 
+									type="firstname" 
+									class="form-control" 
+									id="firstname" 
+									placeholder="Enter full name"
+									ng-model="editedBrother.name">
+							</div>			
+						</div>
+					
+						<div class="col-sm-4">
+							<div class="input-group">
+								<span class="input-group-addon" for="age">Age</span>
+								<input 
+									type="age" 
+									class="form-control" 
+									id="age" 
+									placeholder="Enter age"
+									ng-model="editedBrother.age">
+							</div>
+					    </div>
+					        
+
+						<div class="col-sm-4">
+							<div class="input-group">
+								<span class="input-group-addon" for="email">Email</span>
+								<input 
+								 	type="email" 
+								 	class="form-control" 
+								 	id="email" 
+								 	placeholder="Enter email"
+								 	ng-model="editedBrother.email">
+							</div>
+					    </div>
+					    
+					
+					<pre> {{editedBrother | json}}</pre>    
+
+					    <button 
+					    	type="update" 
+					    	class="size-button btn btn-primary"
+					    	ng-click="saveEditedBrother()">Update
+					    </button>
+
+					    <button 
+					    	type="dlete" 
+					    	class="size-button btn btn-primary"
+					    	ng-click="deleteBrother(editedBrother)">Delete
+					    </button>
+
+					    <button class="size-button btn btn-danger" 
+			        		ng-click="editBrother =! editBrother" 
+			        		ng-show="editBrother">Close
+						</button>
+					</div>
+				</div>
+			</div>
+			</form>	
+			 <!-- EDIT A NEW OBJECT__BEGIN-->
+			<!--SHOW THE EDIT WINDOW WHEN EDIT BUTTON CLICKED END-->
 			
+			<!-- add/edit a brother details-->
+			<!--<brother-manage ng-if="addBrother"></brother-manage> -->
 			<ul class="brothers">
-				<li class="thumbnail" ng-repeat="brother in $ctrl.brothers | filter:$ctrl.query | orderBy:$ctrl.categories">
+				<li class="thumbnail" ng-repeat="brother in bros | filter:$scope.query | orderBy:$scope.categories">
 					<a href="#!/brothers/{{brother.id}}" class="thumb">
 					  <img ng-src="{{brother.imageUrl}}" alt="{{brother.name}}" />
 					</a>
-					<a href="#!/brothers/{{brother.id}}">Name: {{brother.name}}</a>
+					<a href="#!/brothers/{{brother.id}}"><b>Name:</b> {{brother.name}}</a>
+
+					<!-- Two buttows to show/hide more details--><br/>
+					<div ng-show="showDetails">
+			        	<b>Email:</b> {{brother.email}} </br>
+			        	<b>Age:</b> {{brother.age}}</div></br>
+			        <button class="size-button btn btn-info" 
+			        ng-click="showDetails =! showDetails"
+			        ng-show="!showDetails">Details
+			        </button>
+			        <button class="size-button btn btn-danger" 
+			        ng-click="showDetails =! showDetails"
+			        ng-show="showDetails">Close
+			        </button>	
+			        <!-- A button to edit brother details-->
+			        <button class="size-button btn btn-info" 
+			        ng-click="selectBrother(brother)"
+			        ng-show="showDetails">Edit
+			        </button>
 				<li>
+				
+
 			</ul>
 	</div>
 </div>	

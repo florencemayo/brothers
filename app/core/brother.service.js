@@ -1,4 +1,5 @@
 'use strict';
+/* IMPLEMENTATION WITH NG-RESOURCE*/
 
 angular.module('core.brother').
 	factory('Brother', [

@@ -1,5 +1,7 @@
 'use strict';
 
+/*DETAILS TO BE SHOWN ON THE NEXT PAGE*/
+
 var myModule = angular.module('brotherDetails');
 
 myModule.component('brotherDetails',{
@@ -7,13 +9,17 @@ myModule.component('brotherDetails',{
 		controller:['$routeParams', 'Brother', 
 			function BrotherDetailsController($routeParams, Brother){
 				var self = this;
-				self.brother = Brother.get({brotherId: $routeParams.brotherId}, function(brother) {
-				self.setImage(brother.images[0]);
-			    });
+				
+				//return a selected brother
+				self.brother = Brother.get({brotherId: $routeParams.brotherId}, 
+					             function(brother) {
+									//display the first element of an array
+									self.setImage(brother.images[0]);
+			   					 });
 			
+			    //a method that allow to display the current selected image
 			    self.setImage = function setImage(imageUrl){
 				   self.mainImageUrl = imageUrl;
-				   console.log(self.mainImageUrl );
 			   };
 			}
 		]

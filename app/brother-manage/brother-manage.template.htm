@@ -1,6 +1,9 @@
 <form class="form-horizontal" role="form">
 	<div class="container">
 		<div class="listing-form-row row">
+
+		<!-- ADD A NEW OBJECT __BEGIN-->	
+		<div ng-show="addBrother ">
 			<h3> Add a Brother </h3>
 			<div class="col-sm-4">
 				<div class="input-group">
@@ -35,17 +38,72 @@
 					 	class="form-control" 
 					 	id="email" 
 					 	placeholder="Enter email"
-					 	ng-model="newBrother.email"
+					 	ng-model="newBrother.email">
+				</div>
+		    </div>
+		
+
+			<pre> {{newBrother | json}}</pre>
+
+		    <button 
+		    	type="save" 
+		    	class="size-button btn btn-primary"
+		    	ng-click="addBrother(newBrother)"
+		    	ng-show="!editBrother">Save
+		    </button>
+		</div>
+	
+    <!-- ADD A NEW OBJECT___END-->
+
+    <!-- EDIT A NEW OBJECT__BEGIN-->
+		<div ng-show="editBrother">
+			<h3> Edit a Brother </h3>
+			<div class="col-sm-4">
+				<div class="input-group">
+					<span class="input-group-addon" for="name">Full name</span>
+					<input 
+						type="firstname" 
+						class="form-control" 
+						id="firstname" 
+						placeholder="Enter first name"
+						ng-model="editedBrother.full_name">
+				</div>			
+			</div>
+		
+			<div class="col-sm-4">
+				<div class="input-group">
+					<span class="input-group-addon" for="lastname">Age</span>
+					<input 
+						type="age" 
+						class="form-control" 
+						id="age" 
+						placeholder="Enter age"
+						ng-model="editedBrother.age">
+				</div>
+		    </div>
+		        
+
+			<div class="col-sm-4">
+				<div class="input-group">
+					<span class="input-group-addon" for="email">Email</span>
+					<input 
+					 	type="email" 
+					 	class="form-control" 
+					 	id="email" 
+					 	placeholder="Enter email"
+					 	ng-model="editedBrother.email">
 				</div>
 		    </div>
 		    
-		</div>
-		<pre> {{newBrother | json}}</pre>
+		
+		<pre> {{editedBrother | json}}</pre>    
 
 		    <button 
-		    	type="signup" 
-		    	class="listing-button btn btn-primary"
-		    	ng-click="addBrother(newBrother)">Add
+		    	type="update" 
+		    	class="size-button btn btn-primary"
+		    	ng-click="saveEditedBrother(editedBrother)">Update
 		    </button>
-    </div>
+		</div>
+	</div>
+</div>
 </form>	
