@@ -136,7 +136,7 @@
 					    <button 
 					    	type="update" 
 					    	class="size-button btn btn-primary"
-					    	ng-click="saveEditedBrother()">Update
+					    	ng-click="saveEditedBrother(editedBrother)">Update
 					    </button>
 
 					    <button 
@@ -158,8 +158,9 @@
 			
 			<!-- add/edit a brother details-->
 			<!--<brother-manage ng-if="addBrother"></brother-manage> -->
+			
 			<ul class="brothers">
-				<li class="thumbnail" ng-repeat="brother in bros | filter:$scope.query | orderBy:$scope.categories">
+				<li class="thumbnail" ng-repeat="brother in bros | filter:$scope.query | orderBy:$scope.categories track by $index">
 					<a href="#!/brothers/{{brother.id}}" class="thumb">
 					  <img ng-src="{{brother.imageUrl}}" alt="{{brother.name}}" />
 					</a>
