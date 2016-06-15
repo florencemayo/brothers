@@ -23,9 +23,9 @@
 
 	<div class="row">	
 			<!-- Two buttons to show/hide add a brother panel-->
-			<button class="size-button btn btn-primary" 
+			<button class="size-button btn btn-info" 
 			        ng-click="addBrother =! addBrother" 
-			        ng-show="!addBrother" >Add a brother
+			        ng-show="!addBrother" >ADD BROTHER
 			</button>
 
 			<form editable-form class="form-horizontal" role="form">
@@ -34,7 +34,7 @@
                     <!--SHOW THE ADD WINDOW WHEN ADD BUTTON CLICKED BEGIN-->
 					<!-- ADD A NEW OBJECT __BEGIN-->	
 					<div ng-show="addBrother ">
-						<h3> Add a Brother </h3>
+						<h3> ADD NEW BROTHER </h3>
 						<div class="row">
 
 						<div class="col-sm-3">
@@ -93,14 +93,14 @@
 
 					    <button 
 					    	type="save" 
-					    	class="size-button btn btn-primary"
+					    	class="size-button btn btn-info"
 					    	ng-click="inputBrother(newBrother)"
-					    	ng-show="!editBrother">Save
+					    	ng-show="!editBrother">SAVE
 					    </button>
 
-					    <button class="size-button btn btn-danger" 
+					    <button class="size-button btn btn-warning" 
 			        			ng-click="addBrother =! addBrother" 
-			        			ng-show="addBrother">Close
+			        			ng-show="addBrother">CLOSE
 						</button>
 					</div>
 				<!-- ADD A NEW OBJECT___END-->
@@ -109,8 +109,8 @@
 			    <!--SHOW THE EDIT WINDOW WHEN EDIT BUTTON CLICKED BEGIN-->
 			    <!-- EDIT A NEW OBJECT__BEGIN-->
 					<div ng-show="editBrother">
-						<h3> Edit a Brother </h3>
-						<div class="col-sm-4">
+						<h3> EDIT BROTHER </h3>
+						<div class="col-sm-3">
 							<div class="input-group">
 								<span class="input-group-addon" for="name">Full name</span>
 								<input 
@@ -122,7 +122,7 @@
 							</div>			
 						</div>
 					
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<div class="input-group">
 								<span class="input-group-addon" for="age">Age</span>
 								<input 
@@ -135,7 +135,7 @@
 					    </div>
 					        
 
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<div class="input-group">
 								<span class="input-group-addon" for="email">Email</span>
 								<input 
@@ -146,33 +146,60 @@
 								 	ng-model="editedBrother.email">
 							</div>
 					    </div>
+
+					    <div class="col-sm-3">
+							<div class="input-group">
+								<span class="input-group-addon" for="friend"><b>Friend</b></span>
+								<select
+									type="friend" 
+									class="form-control" 
+									id="friend" 
+									default="select friend"
+									ng-model="editedBrother.friend"
+									ng-options="brother.name for brother in bros">
+								</select>
+							</div>
+					   	</div>
 					    
 					
 					<pre> {{editedBrother | json}}</pre>    
 
+					     <button 
+					    	type="moreBro" 
+					    	class="size-button btn btn-info"
+					    	ng-click="addABroToBro =! addBrother" 
+			        		ng-show="!addABroToBro">ADD BROTHERS
+					    </button>
+
+					     <button 
+					    	type="update" 
+					    	class="size-button btn btn-success"
+					    	ng-click="favoriteBrother(editedBrother)"
+					    	ng-click=""
+					    	ng-show="">FAVORITE BROTHER
+					    </button>
+
 					    <button 
 					    	type="update" 
-					    	class="size-button btn btn-primary"
-					    	ng-click="saveEditedBrother(editedBrother)">Update
+					    	class="size-button btn btn-info"
+					    	ng-click="saveEditedBrother(editedBrother)">UPDATE BROTHER
 					    </button>
 
 					    <button 
 					    	type="delete" 
-					    	class="size-button btn btn-primary"
-					    	ng-click="deleteBrother(editedBrother)">Delete
+					    	class="size-button btn btn-danger"
+					    	ng-click="deleteBrother(editedBrother)">DELETE BROTHER
 					    </button>
 
-					    <button 
-					    	type="moreBro" 
-					    	class="size-button btn btn-primary"
-					    	ng-click="addAgainBrother =! addBrother" 
-			        		ng-show="!addAgainBrother">Add more brothers
-					    </button>
+						<button class="size-button btn btn-danger" 
+			        		ng-click="unfriend(editedBrother)" 
+			        		ng-disabled ="yesFriend"
+			        		ng-show="editBrother">UNFRIEND
+						</button>
 
-
-					    <button class="size-button btn btn-danger" 
+					    <button class="size-button btn btn-warning" 
 			        		ng-click="editBrother =! editBrother" 
-			        		ng-show="editBrother">Close
+			        		ng-show="editBrother">CLOSE
 						</button>
 					</div></br>
 
@@ -180,7 +207,7 @@
 					    <!--Window to add more brothers-->
 
 					    
-					    <div class="row" ng-show="addAgainBrother">
+					    <div class="row" ng-show="addABroToBro">
 					    	
 
 					    	<div class="col-sm-4">
@@ -188,11 +215,11 @@
 								
 								<span class="input-group-addon" for="friend"><b>More Bro</b></span>
 								<select
-									type="friend" 
+									type="brother" 
 									class="form-control" 
 									id="friend" 
-									default="select friend"
-									ng-model="newBrother.morebro"
+									default="select bro"
+									ng-model="nextBro"
 									ng-options="brother.name for brother in bros">
 								</select>
 							</div>
@@ -200,16 +227,16 @@
 					   	<div>
 					   		<div class="col-sm-4">
 					   		<button class="size-button btn btn-primary" 
-			        		ng-click="" 
-			        		ng-show="addAgainBrother">ADD
+			        		ng-click="updateListBro(editedBrother)" 
+			        		ng-show="addABroToBro">SELECT
 							</button>
 							</div>
 					   	</div>
 					   	<div>
 					   		<div class="col-sm-4">
-					   		<button class="size-button btn btn-danger" 
-			        		ng-click="addAgainBrother =! addAgainBrother" 
-			        		ng-show="addAgainBrother">Close
+					   		<button class="size-button btn btn-warning" 
+			        		ng-click="addABroToBro =! addABroToBro" 
+			        		ng-show="addABroToBro">CLOSE
 							</button>
 							</div>
 					   	</div>
@@ -230,34 +257,35 @@
 				 class="panel panel-default"  
 				 style="padding:2px;">
 			      <table class="table table-hover" 
-			      		 style="font-size:large">
+			      		 style="font-size:large" align="center">
 			      <thead>
-			      <tr class="info">
-			        <th>Name</th>
-			        <th>Email</th>
-			        <th>Age</th>
-			        <th>Friend name</th>
-			        <th>Best Brother</th>
-			        <th colspan="2">Number of Brothers</th>
-			      </tr>
-			      </thead>
-			      <tbody>
-			     <tr ng-click="selectBrother(brother)" ng-repeat="brother in bros | filter:search_text | orderBy:sort_value track by $index">
-			        <td>{{brother.name}}</td>
-			        <td>{{brother.email}}</td>
-			        <td>{{brother.age}}</td>
-			        <td>{{brother.friend.name}}</td>
-			        <td>{{brother.name}}</td>
-			        <td>{{2+1}}</td>
-			        <td>
+			      <tr class="info" align="center">
+			      	<td>
 			        	<a href="#"
 			        	ng-click="">
 			        	<span style="font-size:14px;" class="glyphicon glyphicon-zoom-in">
 			          	</span>
 			          	</a>
 			        </td>
+			        <th>Name</th>
+			        <th>Email</th>
+			        <th>Age</th>
+			        <th>Friend name</th>
+			        <th>Best Brother</th>
+			        <th>Number of Brothers</th>
+			      </tr>
+			      </thead>
+			      <tbody>
+			     <tr ng-click="selectBrother(brother)" ng-repeat="brother in bros | filter:search_text | orderBy:sort_value track by $index">
+			        <td class="brother-thumbs"><img src="{{brother.imageUrl}}"</td>
+			        <td>{{brother.name}}</td>
+			        <td>{{brother.email}}</td>
+			        <td>{{brother.age}}</td>
+			        <td>{{brother.friend.name}}</td>
+			        <td>{{favoriteBrother}}</td>
+			        <td>{{brother.listBro.length}}</td>
 			     </tr>
-			     <tr class="info">
+			     <tr class="info" >
 			      <td align="center" colspan="7">
 			      	<!--	<pagination 
 				      		boundary-links="true" 
@@ -278,8 +306,8 @@
 				      	</pagination> -->
 				      	<nav>
 				      		<ul class="pager">
-				      			<li><a href="#">Previous</a></li>
-				      			<li><a href="#">Next</a></li>
+				      			<li class="disabled"><a href="#">Previous</a></li>
+				      			<li class="disabled"><a href="#">Next</a></li>
 				      		</ul>
 				      	</nav>
 				  </td>

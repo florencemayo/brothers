@@ -7,49 +7,20 @@ myModule.component('brotherList', {
 		controller: ['BrotherFactory', '$scope', '$localstorage',
 					  function BrotherListController(BrotherFactory,$scope, $localstorage){
 				 	     //set the initial variable to sort
-				 	     this.sort_value='age';
+				 	     $scope.sort_value='age';
 
 				 	     $scope.newBrother = {};
 
-				 	     
-				 	      //INITIALIZE LOCAL STORAGE
+				 	     $scope.listBro =  []; 
+
+				 	     //INITIALIZE LOCAL STORAGE
 				 	    //uncomment to initialize 
 				 	    //$localstorage.setObject("bros",[]);
 
 				 	     //initialize bros
 				 	    $scope.bros=$localstorage.getObject('bros').length> 0 ?$localstorage.getObject('bros'):[];
 
-				 	   	
 				 	   	/*
-				 	   	//PAGINATION
-				 	   	//settings for a pagination links
-				 	   	$scope.currentPage =1;
-				 	   	$scope.entryLimit = 10;
-				 	   	//$scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
-				 	   	//$scope.noOfPages = 0;
-				 	   	//console.log($scope.noOfPages);
-				 	   	$scope.totalItems = $scope.bros.length;
-
-
-				 	   	$scope.$watch('search_text', 
-				 	   		function(search_text){
-							if (search_text) {
-								$scope.totalItems = $scope.bros.length;
-								//$scope.noOfPages = Math.ceil($scope.totalItems);
-								//$scope.noOfPages = 0;
-								$scope.currentPage =1;
-								}
-						});
-
-						$scope.loadBrother = function(name){
-							$rootScope.broadcastBrother = _.find($scope.bros, function(brother) {
-								if (brother.name === name){
-									return brother;
-								}
-							});
-						};*/
-						
-						/*
 						//get the JSON data from brothers.json
 			         	BrotherFactory.getBros().success(function(data){
 			         		$scope.bros = data;
@@ -65,7 +36,7 @@ myModule.component('brotherList', {
 					    if($scope.bros.length>0) {$localstorage.setObject('bros',$scope.bros);}
 			  			
 			         	console.log($localstorage.getObject('bros'));
-			         	
+			         	$scope.addBrother = false;
 			         	//reset the input fields
 			         	$scope.newBrother = {};
 			         };
@@ -75,9 +46,14 @@ myModule.component('brotherList', {
 			         	var index = $scope.bros.indexOf(brother);
 			         	//pop-down the edit window
 			         	$scope.editBrother =true;
-			         	$scope.addBrother =false;
+			         	$scope.addBrother  =false;
 			         	//populate the edit fields
 			         	$scope.editedBrother = $scope.bros[index];
+
+			         	if (brother.friend != null) {
+			         		$scope.yesFriend = false; 
+			         	} else {
+			         		$scope.yesFriend = true; }
 			         };
 
 			         $scope.saveEditedBrother = function(brother){
@@ -85,7 +61,7 @@ myModule.component('brotherList', {
 						$scope.editBrother =false;
 			         	$scope.bros[index]=$scope.editedBrother;
 			         	if($scope.bros.length>0) {$localstorage.setObject('bros',$scope.bros);}
-
+                        $scope.addABroToBro = false;
 			         	$scope.editedBrother ={};
 			        };
 
@@ -97,25 +73,69 @@ myModule.component('brotherList', {
 						$scope.editBrother =false;
 						if($scope.bros.length>0) {$localstorage.setObject('bros',$scope.bros);}
 			  		};
+
+			  		$scope.updateListBro = function(brother){
+                     //var index = $scope.bros.indexOf(brother);
+                     //making sure we are not adding the same brother
+                     //editedBrother <> nextBro
+                     var i = 0;
+                     if (brother.id === $scope.nextBro.id) {
+                     	alert("IMPOSSIBLE");
+                     } else {
+                     	    //check if a bro is already in a list of bros
+	                     	if ($scope.listBro.length>0){
+	                        	while(i < $scope.listBro.length) {
+	                        		if ($scope.nextBro.id === $scope.listBro[i].id) { 
+	                        			alert("DUPLICATE");
+	                        			break;
+	                        		}
+	                        		i++;
+	                        	}
+	                        } 
+
+	                        if (i === $scope.listBro.length || $scope.listBro.length === 0) {
+			                        	//Add a bro to a list of bro
+				                        $scope.listBro.push($scope.nextBro);
+
+				                     	//replace the old list with the current list
+				                     	$scope.editedBrother.listBro =  $scope.listBro;
+				                     	
+				                     	$scope.saveEditedBrother(brother);
+						    } 
+                    }
+                   };
+
+                   $scope.unfriend = function (brother) {
+                        if (brother.friend != null)
+                        {
+                        	brother.friend= "";
+                            $scope.saveEditedBrother(brother);
+                        }
+					}
+
+			  		//set a favorite brother
+			  		//not a friend
+			  		//among list of brothers
+			  		/*$scope.favoriteBrother = function(brother,arrayBros){
+			  			var random, output;
+			  			arrayBros = brother.listBro;
+			  			console.log()
+                        if (arrayBros.length === 0) {
+	                           output = 'No favorite Bro';
+	                    } else {
+				  			if (arrayBros.length>0) {
+					  			//get random  bro
+					  			random = Math.floor(arrayBros.length * Math.random());
+					  			console.log(random);
+					  			output =arrayBros[random].name;
+
+				  			} 
+		                }   
+			  			//return name of the favorite bro
+			  			return output;
+			  		}*/
+
+
 			}
 		]
 });
-
-/*
-
-PAGINATION
-//add a filter
-myModule.filter('startFrom', startFrom);
-
-function startFrom(){
- 	return startFromFilter;
-
- 	function startFromFilter(input, start){
- 		if (input){
- 			start=+start;
- 			return input.slice(start);
- 		}
- 		return [];	
- 	}
-}
-*/	

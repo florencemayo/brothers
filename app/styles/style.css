@@ -41,9 +41,9 @@
 }
 
 .brother-thumbs img {
-	height: 150px;
+	height: 100px;
 	/*padding: 1em;*/
-	width: 150px;
+	width: 100px;
 }
 
 .brother-thumbs li {
@@ -99,7 +99,7 @@
 }
 
 .size-button{
-	width: 150px;
+	width: 160px;
 	margin-bottom: 10px;
 }
 
