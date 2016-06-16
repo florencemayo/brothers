@@ -6,21 +6,18 @@ var myModule = angular.module('brotherDetails');
 
 myModule.component('brotherDetails',{
 		templateUrl:'brother-details/brother-details.template.htm',
-		controller:['$routeParams', 'Brother', 
-			function BrotherDetailsController($routeParams, Brother){
-				var self = this;
-				
-				//return a selected brother
-				self.brother = Brother.get({brotherId: $routeParams.brotherId}, 
-					             function(brother) {
-									//display the first element of an array
-									self.setImage(brother.images[0]);
-			   					 });
-			
-			    //a method that allow to display the current selected image
-			    self.setImage = function setImage(imageUrl){
-				   self.mainImageUrl = imageUrl;
-			   };
+		controller:['$List','$routeParams', '$scope', 'GeneralFactory', '$localstorage',
+			function BrotherDetailsController($List, $routeParams, $scope,GeneralFactory,$localstorage){
+				//get the selected brother brother
+				//var list = GeneralFactory.get();
+				var list = $List.listBrothers;
+				//save the data to local storage
+				if (list.length>0) $localstorage.setObject('brother',list);
+
+				//get the data from local storage
+				//$scope.brother=$localstorage.getObject('brother').length> 0 ?$localstorage.getObject('brother'):[];
+                var brothers=$localstorage.getObject('brother').length> 0 ?$localstorage.getObject('brother'):[];
+                $scope.brother =  brothers[$routeParams.id];
 			}
 		]
 });

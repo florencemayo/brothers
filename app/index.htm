@@ -29,7 +29,6 @@
   <script src="app.config.js"></script>
   <script src="core/brother.module.js"></script>
   <script src="core/core.module.js"></script>
-  <script src="core/brother.service.js"></script>
   <script src="core/brotherFactory.js"></script>
   <script src="brother-list/brother-list.module.js"></script>
   <script src="brother-details/brother-details.module.js"></script>
@@ -44,8 +43,16 @@
 </head>
 <body>
 	<div  class="container">
-     <h1 align="left"> <a href="http://localhost/brothers/app/#!/brothers">BROTHERS</a></h1>
-      
+     
+     <ul class="nav nav-tabs">
+      <div class="container-fluid">
+        <div class="navbar-header " >
+        <li role="presentation" class="navbar-brand"><a href="/brothers/app/#!/brothers"
+          >BROTHERS</a></li>
+      </div>
+    </div>
+    </ul> 
+
      <div ng-view></div>
 
   </div>

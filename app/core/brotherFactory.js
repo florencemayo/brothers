@@ -2,17 +2,6 @@
 /* IMPLEMENTATION WITH HTTP SERVICE*/
 
 angular.module('core.brother')
-	.factory('BrotherFactory', function($http){
-		
-		function getBrothers(){
-			return $http.get('brothers/brothers.json');
-		}
-
-		return {
-			getBros: getBrothers
-		};
-	})
-
 	.factory('$localstorage', ['$window', function($window) {
 	  	return {
 	    set: function(key, value) {
@@ -35,4 +24,21 @@ angular.module('core.brother')
 	    	return array;
 	    }
 	  }
-}]);
+    }])
+    .factory('GeneralFactory',function(){
+    	var savedData = [];
+    	//Setter
+    	function set(data){
+    		savedData =data;
+    	}
+    	//Getter
+    	function get(){
+    		return savedData;
+    	}
+
+    	return {
+    		set : set,
+    		get : get
+    	}
+
+    });

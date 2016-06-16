@@ -1,12 +1,46 @@
-
-/*h1 {
-	background-color: lightblue;
-	 border: 3px solid blue;
+.nav-tabs {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	
 }
-.top-row{
-	padding-top: 0px;
-	padding-bottom: 20px;
-}*/
+
+.navbar-header a {
+	color: lightblue;
+	font-size: 40px;
+	font-style: italic;
+	text-decoration: none;
+}
+
+.navbar-header a:hover {
+	color: lightblue;
+    text-decoration: none;
+}
+.navbar-header a:link {
+	color: lightblue;
+    text-decoration: none;
+}
+
+.navbar-header a:visited {
+	color: lightblue;
+    text-decoration: none;
+}
+
+.navbar-header a:hover {
+	text-decoration: none;
+}
+
+.navbar-header a:active {
+	color: lightblue;
+    text-decoration: none;
+}
+
+.details {
+    padding-top: 30px;
+	padding-bottom: 10px;
+}
+
+
+
 
 .brothers{
 	list-style: none;
@@ -18,9 +52,9 @@
 
 .brothers li {
 	clear: both;
-	height:300px;
-	width: 500px;
-	display: inline-block;
+	height:150px;
+	/*width: 500px;*/
+	/*display: inline-block; */
 	padding-top: 15px;
 	margin-right: 15px;
 }
@@ -103,16 +137,12 @@
 	margin-bottom: 10px;
 }
 
-/*table*/
-.panel{
-  margin-left: auto;
-  margin-right: auto;
-}
-.panel-info{
- margin-left: auto;
- margin-right: auto;
-}
-.table {
-   margin-left: auto;
-   margin-right: auto;
+
+.images {
+	clear: both;
+	height:150px;
+	/*width: 500px;*/
+	/*display: inline-block; */
+	padding-top: 15px;
+	margin-right: 15px;
 }
