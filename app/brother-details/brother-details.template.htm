@@ -1,3 +1,4 @@
+<form>
 <div class="row details">
 	<div class="col-sm-4">
 		<div class="thumbnail">
@@ -22,13 +23,19 @@
 		ng-click="editBrother =! editBrother"
 		ng-show="!addBrother" >EDIT BROTHER </button><br/><br/>
 
-		<button 
-    	type="delete" 
-    	class="size-button btn btn-danger"
-    	ng-click="deleteBrother(brother)"
-    	ng-show="!addBrother">DELETE BROTHER
-        </button>
-	</div>
+		<div ng-cloak>
+		<md-content>
+			<md-button 
+	    	type="delete" 
+	    	class="size-button md-warn md-raised"
+	    	ng-click="deleteBrother($event,brother)"
+	    	flex="100"
+	    	flex-gt-md="auto"
+	    	ng-show="!addBrother">DELETE BROTHER
+	        </md-button>
+	    </md-content>
+        </div>
+    </div>
 </div>
 
  <!--SHOW THE EDIT WINDOW WHEN EDIT BUTTON CLICKED BEGIN-->
@@ -178,3 +185,5 @@
 
 <!-- add/edit a brother details-->
 <!--<brother-manage ng-if="addBrother"></brother-manage> -->
+
+       

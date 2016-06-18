@@ -12,9 +12,8 @@
    
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" >
 
-  <link href="../bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
-  
-  
+  <link rel="stylesheet" href="../node_modules/angular-material/angular-material.css">
+
     <!--css minified JavaScript 
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
   
@@ -22,7 +21,12 @@
   <script src="../bower_components/angular/angular.js"></script>
   <script src="../bower_components/angular-route/angular-route.js"></script>
   <script src="../bower_components/angular-resource/angular-resource.js"></script>
-  <script src="../bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+
+  <!-- npm components -->
+  <script src="../node_modules/angular-aria/angular-aria.js"></script>
+  <script src="../node_modules/angular-animate/angular-animate.js"></script>
+  <script src="../node_modules/angular-material/angular-material.js"></script>
+
 
   <!-- Modules & Configs & services-->
   <script src="app.module.js"></script>
@@ -43,16 +47,19 @@
 </head>
 <body>
 	<div  class="container">
-     
+      
+      
      <ul class="nav nav-tabs">
       <div class="container-fluid">
         <div class="navbar-header " >
         <li role="presentation" class="navbar-brand"><a href="/brothers/app/#!/brothers"
           >BROTHERS</a></li>
+
       </div>
     </div>
     </ul> 
-
+     <div>
+     
      <div ng-view></div>
 
   </div>

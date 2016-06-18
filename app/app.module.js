@@ -5,12 +5,10 @@ angular.
   module('ng-brothers',[
   		 'ngRoute',
   		 'core',
-  		 'xeditable',
+       'ngMaterial',
   		 'brotherDetails',
   		 'brotherList',
   		 'brotherManage'
-]).run(function(editableOptions){
-	//boostrap theme
-  	editableOptions.theme = 'bs3';
-  	});
+      ]
+  )
 })();
