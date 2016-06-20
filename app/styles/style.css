@@ -1,7 +1,6 @@
 .nav-tabs {
 	padding-top: 10px;
 	padding-bottom: 10px;
-	
 }
 
 .navbar-header a {
@@ -147,6 +146,15 @@
 	margin-right: 15px;
 }
 
-.size-button md-button {
-	background-color: red;
+.md-button{
+	background-color: #ffcccc;
+}
+
+.text-info {
+	font-size: 30px;
+}
+
+.spacing {
+  padding-top: 10px;
+  padding-bottom: 10px
 }

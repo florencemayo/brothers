@@ -4,8 +4,8 @@ var myModule = angular.module('brotherList');
 
 myModule.component('brotherList', {
 		templateUrl: 'brother-list/brother-list.template.htm',
-		controller: ['$scope', '$localstorage', 'GeneralFactory',
-				function BrotherListController($scope, $localstorage,GeneralFactory){
+		controller: ['$scope', '$localstorage',
+				function BrotherListController($scope, $localstorage){
 				 	//set the initial variable to sort
 				 	$scope.sort_value='age';
 
@@ -19,8 +19,7 @@ myModule.component('brotherList', {
 
 				 	//initialize bros
 				 	$scope.bros=$localstorage.getObject('bros').length> 0 ?$localstorage.getObject('bros'):[];
-                    GeneralFactory.set($scope.bros);                 
-					//function to add brother details
+                    //function to add brother details
 			        $scope.inputBrother = function(newBrother){
 			         	newBrother.imageUrl="img/default.jpg";
 			         	newBrother.id=$scope.bros.length;
@@ -31,21 +30,6 @@ myModule.component('brotherList', {
 			         	$scope.addBrother = false;
 			         	//reset the input fields
 			         	$scope.newBrother = {};
-			         };
-
-			        //function to set the field when selecting a brother
-			        $scope.selectBrother = function(brother){
-			         	var index = $scope.bros.indexOf(brother);
-			         	//pop-down the edit window
-			         	$scope.editBrother =true;
-			         	$scope.addBrother  =false;
-			         	//populate the edit fields
-			         	$scope.editedBrother = $scope.bros[index];
-
-			         	if (brother.friend != null) {
-			         		$scope.yesFriend = false; 
-			         	} else {
-			         		$scope.yesFriend = true; }
 			         };
 
 			        $scope.saveEditedBrother = function(brother){
