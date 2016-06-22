@@ -24,9 +24,12 @@ myModule.component('brotherList', {
 			         	newBrother.imageUrl="img/default.jpg";
 			         	newBrother.id=$scope.bros.length;
 						$scope.bros.push(newBrother);
+
+						//initiate an empty list of brothers
+			  			newBrother.listBrothers = [];
 					    if($scope.bros.length>0) {$localstorage.setObject('bros',$scope.bros);}
 			  			
-			         	console.log($localstorage.getObject('bros'));
+			  			console.log($localstorage.getObject('bros'));
 			         	$scope.addBrother = false;
 			         	//reset the input fields
 			         	$scope.newBrother = {};
@@ -88,28 +91,6 @@ myModule.component('brotherList', {
                             $scope.saveEditedBrother(brother);
                         }
 					}
-
-			  		//set a favorite brother
-			  		//not a friend
-			  		//among list of brothers
-			  		/*$scope.favoriteBrother = function(brother,arrayBros){
-			  			var random, output;
-			  			arrayBros = brother.listBro;
-			  			console.log()
-                        if (arrayBros.length === 0) {
-	                           output = 'No favorite Bro';
-	                    } else {
-				  			if (arrayBros.length>0) {
-					  			//get random  bro
-					  			random = Math.floor(arrayBros.length * Math.random());
-					  			console.log(random);
-					  			output =arrayBros[random].name;
-
-				  			} 
-		                }   
-			  			//return name of the favorite bro
-			  			return output;
-			  		}*/
 			}
 		]
 });

@@ -1,10 +1,22 @@
 <form editable-form name="editableForm" onaftersave="updateBrother(brother)">
+	<div style="margin-top: 4px; margin-bottom:4px;">
+
+
+
 	<div class="row details">
 		<!-- IMAGE-->
 		<div class="col-sm-4">
 			<div class="thumbnail">
 			<img  ng-src="{{brother.imageUrl}}" />
 		   </div>
+		   <div>
+		   	<!-- New brother-->
+			  		<button 
+						class="size-button btn btn-primary" 
+				        ng-click="addBrothers =! addBrothers" 
+				        ng-show="!addBrothers" >NEW BROTHER
+					</button>
+		   </div>	
 	 	</div>
 		
 		<!-- BROTHER INFO-->
@@ -43,16 +55,6 @@
 		  </li>
 		  <li class="list-group-item list-group-item-info">
 		  		<div class="row">
-		  			<div class="col-sm-6">
-		  				<span><b>Number of brothers </b></span> 
-		  			</div>
-		  			<div class="col-sm-6">
-						<span editable-text="brother.listBrothers.length">{{brother.listBrothers.length}} </span>
-					</div>
-				</div>		
-		  </li>
-		  <li class="list-group-item list-group-item-info">
-		  		<div class="row">
 			  		<div class="col-sm-6">
 			  			<span><b>Friend name </b></span>
 			  		</div>
@@ -67,7 +69,7 @@
 		  				<span><b>Favorite brother </b></span> 
 		  			</div>
 		  			<div class="col-sm-6">	
-		  				<span editable-text="favoriteBrother.name">{{favoriteBrother.name}}</span>
+		  				<span editable-text="brother.favoriteBrother.name">{{brother.favoriteBrother.name}}</span>
 		  			</div>
 		  		</div>	
 		  </li>
@@ -88,6 +90,7 @@
 			  			class="md-primary size-button md-raised"
 			  			ng-disabled="editableForm.$waiting">SAVE
 			  		</md-button>
+
 			  		<!-- button to cancel -->
 			  		<md-button type="button"
 			  			class="md-warn size-button md-raised"
@@ -95,6 +98,17 @@
 			  			ng-click="editableForm.$cancel()">
 			  			CANCEL
 			  		</md-button>
+			  		
+			  		<!-- -->
+			  		<md-button
+			  			type="unfriend" 
+				    	class="size-button md-raised md-warn" 
+						ng-click="removeFriend(editedBrother)" 
+						ng-disabled="editableForm.$waiting">
+						UNFRIEND
+					</md-button> 
+
+
 			  		<!-- button to delete -->
 			  		<md-button 
 				    	type="delete" 
@@ -102,8 +116,11 @@
 				    	ng-click="deleteBrother($event,brother)"
 				    	flex="100"
 				    	flex-gt-md="auto"
-				    	ng-show="!addBrother">DELETE
+				    	ng-disabled="editableForm.$waiting">
+				    	DELETE
 				    </md-button>
+
+				    
 		    	</md-content>
 	       	</div>	
 		  </li>
@@ -111,197 +128,145 @@
 		</div>
 	</div>
 
-	<!--ADD BROTHERS -->
-	<div class="row">
-		<div class="col-sm-6">
-			<span class="text-info">Brother can have many brothers</span>
+	</div>
+	
+	<!-- FIELDS TO ADD BROTHER -->
+	<div ng-show="addBrothers" class="addBrotherBody">
+		<h2 class="caption"> Input new details of a brother</h2>
+		<div class="input-group spacing">
+			<span class="input-group-addon" for="name"><b>Name</b></span>
+			<input 
+				type="firstname" 
+				class="form-control" 
+				id="firstname" 
+				placeholder="Enter full name"
+				ng-model="newBrother.name" />
+		</div>			
+			
+
+			
+		<div class="input-group spacing">
+			<span class="input-group-addon" for="email"><b>Email</b></span>
+			<input 
+			 	type="email" 
+			 	class="form-control" 
+			 	id="email" 
+			 	placeholder="Enter email"
+			 	ng-model="newBrother.email" />
 		</div>
-		<div class="col-sm-6">
-			<button 
-				class="size-button btn btn-info" 
-		        ng-click="addBrothers =! addBrothers" 
-		        ng-show="!addBrothers" >ADD
+		   
+
+		   
+		<div class="input-group spacing">
+			<span class="input-group-addon" for="age"><b>Age</b></span>
+			<input 
+				type="age" 
+				class="form-control" 
+				id="age" 
+				placeholder="Enter age"
+				ng-model="newBrother.age" />
+		</div>
+  
+		   
+		<div class="input-group spacing">
+			<span class="input-group-addon" for="nameFriend"><b>Name of friend</b></span>
+			<input
+				type="nameFriend" 
+				class="form-control" 
+				id="nameFriend" 
+				ng-model="newBrother.friend.name"/>
+		</div>
+
+		<div class="input-group spacing">
+			<span class="input-group-addon" for="emailFriend"><b>Email of friend</b></span>
+			<input
+				type="emailFriend" 
+				class="form-control" 
+				id="emailFriend" 
+				ng-model="newBrother.friend.email"/>
+		</div>
+
+		<div> 
+			<pre> {{newBrother | json}}</pre>       
+		</div>
+
+		
+		<div>
+		    <button 
+		    	type="brother" 
+		    	class="size-button btn btn-info spacing"
+		    	ng-click="updateListBrothers(newBrother)"> 
+				ADD
+		    </button>
+
+	    	<button 
+		    	class="size-button btn btn-warning spacing" 
+				ng-click="addBrothers =! addBrothers">
+				CANCEL
 			</button>
 		</div>
 	</div>
+	
+	<!-- SHOW BROTHERS OF A BR0THER-->
+	<table class="table table-hover spacing" 
+	  		 style="font-size:large" 
+	  		 align="center"
+	  		 ng-show="brother.listBrothers.length > 0">
+	  <h2 class="caption">Brother can have many brothers</h2>	
+	  <thead>
+	  
+	  <tr class="info" align="center">
+	  	<td>
+	    	<a href="#"
+	    	ng-click="">
+	    	<span style="font-size:14px;" class="glyphicon glyphicon-zoom-in">
+	      	</span>
+	      	</a>
+	    </td>
+	    <th>Name</th>
+	    <th>Email</th>
+	    <th>Age</th>
+	    <th>Friend name</th>
+	    <th>Best Brother</th>
+	    <th>Number of Brothers</th>
+	  </tr>
+	  </thead>
+	  <tbody>
+	 <tr ng-click="favoriteBrother(brother)" ng-repeat="brother in brother.listBrothers">
+	    <td class="brother-thumbs"><img src="{{brother.imageUrl}}"</td>
+	    <td>{{brother.name}}</td>
+	    <td>{{brother.email}}</td>
+	    <td>{{brother.age}}</td>
+	    <td>{{brother.friend.name}}</td>
+	    <td>{{brother.favoriteBrother.name}}</td>
+	    <td>{{brother.listBro.length}}</td>
+	 </tr>
+	 <tr class="info" >
+	  <td align="center" colspan="7">
+	 	<pagination 
+	      		boundary-links="true" 
+	      		ng-model="currentPage" 
+	      		total-items="totalItems" 
+	      		items-per-page="entryLimit"
+	            ss="pagination-sm" 
+	            previous-text="&lsaquo;" 
+	            next-text="&rsaquo;" 
+	            first-text="&laquo;" 
+	            last-text="&raquo;" 
+	            rotate="false"
+	            max-size="4">
+	      	</pagination> 
+	      	<nav>
+	      		<ul class="pager">
+	      			<li class="disabled"><a href="#">Previous</a></li>
+	      			<li class="disabled"><a href="#">Next</a></li>
+	      		</ul>
+	      	</nav>
+	  </td>
+	 </tr> 
+	 </tbody>
+	</table>
 
-	<!-- FIELDS TO ADD BROTHER -->
-	<div ng-show="addBrothers" class="spacing">
-		<div class="row spacing"> 
-			<div class="col-sm-4">
-				<div class="input-group">
-					<span class="input-group-addon" for="name">Name</span>
-					<input 
-						type="firstname" 
-						class="form-control" 
-						id="firstname" 
-						placeholder="Enter full name"
-						ng-model="newBrother.name">
-				</div>			
-			</div>
-
-			<div class="col-sm-4">
-				<div class="input-group">
-					<span class="input-group-addon" for="email">Email</span>
-					<input 
-					 	type="email" 
-					 	class="form-control" 
-					 	id="email" 
-					 	placeholder="Enter email"
-					 	ng-model="newBbrother.email">
-				</div>
-		    </div>
-
-		    <div class="col-sm-4">
-				<div class="input-group">
-					<span class="input-group-addon" for="age">Age</span>
-					<input 
-						type="age" 
-						class="form-control" 
-						id="age" 
-						placeholder="Enter age"
-						ng-model="newBrother.age">
-				</div>
-		    </div>
-		</div>    
-		<div class="row"> 
-			<div class="col-sm-4">
-				<div class="input-group">
-					<span class="input-group-addon" for="numberBrothers">Number of brothers</span>
-					<input 
-						type="numberBrothers" 
-						class="form-control" 
-						id="numberBrothers" 
-						placeholder="Enter number"
-						ng-model="brother.listBrothers">
-				</div>
-		    </div>
-		  
-		    <div class="col-sm-4">
-				<div class="input-group">
-					<span class="input-group-addon" for="friend"><b>Friend</b></span>
-					<select
-						type="friend" 
-						class="form-control" 
-						id="friend" 
-						default="select friend"
-						ng-model="newbrother.friend"
-						ng-options="brother.name for brother in brothers">
-					</select>
-				</div>
-		   	</div>
-
-		   	 <div class="col-sm-4">
-				<div class="input-group">
-					<span class="input-group-addon" for="favorite"><b>Favorite brother</b></span>
-					<select
-						type="favorite" 
-						class="form-control" 
-						id="favorite" 
-						default="select favorite"
-						ng-model="newbrother.favorite"
-						ng-options="brother.name for brother in brothers">
-					</select>
-				</div>
-		   	</div>
-		</div>
-
-		<div class="row spacing"> 
-			<div class="col-sm-12">   
-				<pre> {{newBrother | json}}</pre>    
-		    </div>
-		</div>
-
-		<div class="row spacing"> 
-			<div class="col-sm-4">
-			    <button 
-			    	type="brother" 
-			    	class="size-button btn btn-info"
-			    	ng-click="updateListBrothers(newBrother)"> 
-					ADD
-			    </button>
-
-			    <!--<button 
-			    	type="update" 
-			    	class="size-button btn btn-success"
-			    	ng-click="favoriteBrother(brother)"
-			    	ng-click=""
-			    	ng-show="">
-			    	FAVORITE BROTHER
-			    </button>
-
-			    <button 
-			    	type="update" 
-			    	class="size-button btn btn-info"
-			    	ng-click="saveEditedBrother(brother)">
-			    	UPDATE
-			    </button>
-
-		    	<button 
-			    	class="size-button btn btn-danger" 
-					ng-click="unfriend(editedBrother)" 
-					ng-disabled ="yesFriend"
-					ng-show="editBrother">
-					UNFRIEND <br/>
-				</button> -->
-
-		    	<button 
-			    	class="size-button btn btn-warning" 
-					ng-click="addBrothers =! addBrothers">
-					CANCEL
-				</button>
-			</div>
-		</div>
-	</div>
-
-	<!-- TABLE OF BROTHERS-->
-	<div ng-show="brother.listBrothers.length > 0" 
- 		 class=""  
- 		 style="padding:2px;">
- 		<table class="table table-hover" 
-		      		 style="font-size:large" align="center">
-		    <thead>
-		    	<tr class="info" align="center">
-				      	<td>
-				        	<a href="#"
-				        	ng-click="">
-				        	<span style="font-size:14px;" 
-				        	      class="glyphicon glyphicon-zoom-in">
-				          	</span>
-				          	</a>
-				        </td>
-				        <th>Name</th>
-				        <th>Email</th>
-				        <th>Age</th>
-				        <th>Friend name</th>
-				        <th>Best Brother</th>
-				        <th>Number of Brothers</th>
-			    </tr>
-		    </thead>
-		    <tbody>
-			    <tr ng-click="" ng-repeat="newBrother in brother.listBrothers track by $index">
-				        <td class="brother-thumbs">
-				        	<img ng-src="{{newBrother.imageUrl}}" />
-				        </td>
-				        <td>{{newBrother.name}}</td>
-				        <td>{{newBrother.email}}</td>
-				        <td>{{newBrother.age}}</td>
-			       		<td>{{newBrother.friend.name}}</td>
-			        	<td>{{favoriteBrother}}</td>
-				        <td>{{newBrother.listBro.length}}</td>
-			    </tr>
-		     	<tr class="info" >
-			      		<td align="center" colspan="7">
-				     		<nav>
-					      		<ul class="pager">
-					      			<li class="disabled"><a href="#">Previous</a></li>
-					      			<li class="disabled"><a href="#">Next</a></li>
-					      		</ul>
-				      		</nav>
-				 		</td>
-		     	</tr> 
-		    </tbody>
-		</table>
- 	</div>	
+	
 </form>	
        

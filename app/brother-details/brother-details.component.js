@@ -6,51 +6,64 @@ var myModule = angular.module('brotherDetails');
 
 myModule.component('brotherDetails',{
 		templateUrl:'brother-details/brother-details.template.htm',
-		controller:['$List','$routeParams', '$scope', '$localstorage', '$mdDialog', '$location','$timeout',
-			function BrotherDetailsController($List, $routeParams, $scope,$localstorage, $mdDialog, $location, $timeout){
-				//get the selected brother brother
-				//var list = GeneralFactory.get();
-				//var list ;//= $List.listBrothers;
-				//save the data to local storage
-				//if (list.length>0) $localstorage.setObject('brothers',list);
-
+		controller:['$routeParams', '$scope', '$localstorage', '$mdDialog', '$location','$timeout',
+			function BrotherDetailsController($routeParams, $scope,$localstorage, $mdDialog, $location, $timeout){
 				
-				
-				var brothers=$localstorage.getObject('brother').length> 0 ?$localstorage.getObject('bros'):[];
-                console.log(brothers.length);
+				var brothers=$localstorage.getObject('bros').length> 0 ?$localstorage.getObject('bros'):[];
+                console.log("Initially "+brothers.length);
 
-				//get the data from local storage
-				//$scope.brother=$localstorage.getObject('brother').length> 0 ?$localstorage.getObject('brother'):[];
-                //var brothers=$localstorage.getObject('brother').length> 0 ?$localstorage.getObject('brother'):[];
-                $scope.brother =  brothers[$routeParams.id];
+				$scope.brother =  brothers[$routeParams.id];
 
-                //UPDATE A BROTHER
+				//UPDATE A BROTHER
 			    $scope.updateBrother = function(brother){
 			         	var index = brothers.indexOf(brother);
 						brothers[index]=$scope.brother;
 			         	$localstorage.setObject('bros',brothers);
                 };
 
-                //ADD A BROTHER TO A BROTHER
-                $scope.listBrothers =  []; 
-
-                $scope.newBrother = {};
+               //ADD A BROTHER TO A BROTHER
+               //get the current list of brothers
+               var listBros_current = [];
                $scope.updateListBrothers = function(brother){
                     //add datas to an object
-            		$scope.newBrother.imageUrl="img/brother1.jpg";
-	        		$scope.newBrother.id=brothers.length;
-
-	        		//Add a bro to a list of bro
-                    $scope.listBrothers.push($scope.newBrother);
-					//replace the old list with the current list
-                 	$scope.brother.listBrothers =  $scope.listBrothers;
-                 	$scope.updateBrother(brother);
+            		brother.imageUrl="img/brother2.jpg";
+	        		brother.id=brothers.length;
+	        		//initiate an empty list of brothers
+			  		brother.listBrothers = [];
+			  		
+			  		//temporary brother
+	        		var Brother = {};
+                 	Brother = $scope.brother;
+					
+					listBros_current = $scope.brother.listBrothers;
+					
+					listBros_current.push(brother);
+					
+					Brother.listBrothers = listBros_current;
+					
+					//update brother
+					var index = brothers.indexOf($scope.brother);
+					//add the newly set brother to local storage
+			        brothers[index]=Brother;
+			        $localstorage.setObject('bros',brothers);
+			        $scope.newBrother = {};
+			        $scope.addBrothers = false;
 				  };
 
 
                 //SET A FAVORITE BROTHER
+                $scope.favoriteBrother = function(brother){
+			  			$scope.brother.favoriteBrother =brother;
+			  			$scope.updateBrother(brother);
+			    }
 
                 //UNFRIEND A BROTHER
+                $scope.removeFriend = function() {
+                	if ($scope.brother.friend != null) {
+                		$scope.brother.friend = {};
+						$scope.updateBrother($scope.brother);
+                	}
+                }
 
                 //DELETE A BROTHER
                 $scope.submit = function(){

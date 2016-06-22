@@ -15,7 +15,7 @@
 				<select ng-model="sort_value" class="form-control">
 					<option value="name">Alphabetical</option> <!-- name-->
 					<option value="email">Best brothers</option> <!-- best borthers-->
-					<option value="age">Number of Borthers</option> <!-- number of brothers-->
+					<option value="listBrothers">Number of Borthers</option> <!-- number of brothers-->
 				</select>
 			</div>
 		</div>
@@ -31,66 +31,72 @@
 	
 	<form editable-form class="form-horizontal" role="form">
 			<div class="container">
-				<div class="listing-form-row"> 
+				<div class="listing-form-row "> 
                     <!--SHOW THE ADD WINDOW WHEN ADD BUTTON CLICKED BEGIN-->
 					<!-- ADD A NEW OBJECT __BEGIN-->	
 				    <div ng-show="addBrother ">
 						<h3> ADD NEW BROTHER </h3>
-					    <div class="row">
-
-							<div class="col-sm-3">
-								<div class="input-group">
-									<span class="input-group-addon" for="name"><b>Full name</b></span>
-									<input 
-										type="firstname" 
-										class="form-control" 
-										id="firstname" 
-										placeholder="Enter full name"
-										ng-model="newBrother.name">
-								</div>			
+					    <div class="row spacing">
+							<div class="input-group">
+								<span class="input-group-addon" for="name"><b>Name</b></span>
+								<input 
+									type="name" 
+									class="form-control" 
+									id="firstname" 
+									placeholder="Enter full name"
+									ng-model="newBrother.name" />
+							</div>			
+						</div>
+						
+						<div class="row spacing">
+							<div class="input-group">
+								<span class="input-group-addon" for="age"><b>Age</b></span>
+								<input 
+									type="age" 
+									class="form-control" 
+									id="age" 
+									placeholder="Enter age"
+									ng-model="newBrother.age" />
 							</div>
-						
-							<div class="col-sm-3">
-								<div class="input-group">
-									<span class="input-group-addon" for="age"><b>Age</b></span>
-									<input 
-										type="age" 
-										class="form-control" 
-										id="age" 
-										placeholder="Enter age"
-										ng-model="newBrother.age">
-								</div>
-						    </div>
-						        
+					    </div>
+					        
 
-							<div class="col-sm-3">
-								<div class="input-group">
-									<span class="input-group-addon" for="email"><b>Email</b></span>
-									<input 
-									 	type="email" 
-									 	class="form-control" 
-									 	id="email" 
-									 	placeholder="Enter email"
-									 	ng-model="newBrother.email">
-								</div>
-						    </div>
-						
+						<div class="row spacing">
+							<div class="input-group">
+								<span class="input-group-addon" for="email"><b>Email</b></span>
+								<input 
+								 	type="email" 
+								 	class="form-control" 
+								 	id="email" 
+								 	placeholder="Enter email"
+								 	ng-model="newBrother.email" />
+							</div>
+					    </div>
+					
 
-							<div class="col-sm-3">
-								<div class="input-group">
-									<span class="input-group-addon" for="friend"><b>Friend</b></span>
-									<select
-										type="friend" 
-										class="form-control" 
-										id="friend" 
-										default="select friend"
-										ng-model="newBrother.friend"
-										ng-options="brother.name for brother in bros">
-									</select>
-								</div>
-						   	</div>
-					   </div>
-				        </br><pre> {{newBrother | json}}</pre>
+						<div class="row spacing">
+							<div class="input-group">
+								<span class="input-group-addon" for="namefriend"><b>Name of friend</b></span>
+								<input
+									type="namefriend" 
+									class="form-control" 
+									id="namefriend" 
+									ng-model="newBrother.friend.name" />
+							</div>
+					   	</div>
+
+					   	<div class="row spacing">
+							<div class="input-group">
+								<span class="input-group-addon" for="emailfriend"><b>Email of friend</b></span>
+								<input
+									type="emailfriend" 
+									class="form-control" 
+									id="emailfriend" 
+									ng-model="newBrother.friend.email" />
+							</div>
+					   	</div>
+
+				  		</br><pre> {{newBrother | json}}</pre>
 
 					    <button 
 					    	type="save" 
@@ -108,94 +114,40 @@
 			</div>   
 			
 		<div ng-show="bros.length > 0" 
-			 class=""  
 			 style="padding:2px;">
 				<ul class="brothers">
 		 			<li class="thumbnail" ng-repeat="brother in bros | filter:search_text | orderBy:sort_value track by $index">
 			  			<a href="#!/brothers/{{brother.id}}" class="thumb">
 			  			  <img ng-src="{{brother.imageUrl}}" alt="{{brother.name}}" />
 			  			</a>
-			 			<a href="#!/brothers/{{brother.id}}"><b>Name :</b> <i>{{brother.name}}</i></a>
-		 			
+			 			<a href="#!/brothers/{{brother.id}}"><b>Name :</b>
+			 			 <i>{{brother.name}}</i></a>
+		 			     <br/>
 		 				<!-- Two buttows to show/hide more details--><br/>
 			 			<div ng-show="showDetails">
-				 			<b ng-if="brother.email != null">Email :</b><i> {{brother.email}} &nbsp  &nbsp &nbsp &nbsp
-				 			<b ng-if ="brother.listBro.length >0">Number of Brothers :</b><i>{{brother.listBro.length}}</i>&nbsp  &nbsp &nbsp &nbsp
-				 			<b ng-if="favoriteBrothe.name != null">Fravorite Brother :</b><i>{{favoriteBrothe.name}}</i> 
+				 			<b>Email :</b><i> 
+				 			{{brother.email != null ? brother.email : 'Not available'}}
+				 			<br/>
+				 			<b>Number of Brothers :</b>
+				 			<i>{{brother.listBrothers.length > 0 ?brother.listBrothers.length : 0}}</i>
+				 			<br/>
+				 			<b>Friend name : </b>
+				 			<i>{{brother.friend != null ? brother.friend.name : 'Not available'}}</i>
+				 			<br/>
+				 			<b ng-if="favoriteBrother.name != null">
+				 				Favorite Brother :</b><i>
+				 				{{favoriteBrother.name}}</i> 
 			 			</div><br/>
 	 			        <button class="size-button btn btn-info" 
 	 			        ng-click="showDetails =! showDetails"
 	 			        ng-show="!showDetails">VIEW DETAILS
-				        </button> &nbsp &nbsp
+				        </button>
 				        <button class="size-button btn btn-warning" 
 				        ng-click="showDetails =! showDetails"
 				        ng-show="showDetails">CLOSE
 				        </button>
-					<li>
+					</li>
 	 			</ul>
-
-	                  <!--
-				      <table class="table table-hover" 
-				      		 style="font-size:large" align="center">
-				      <thead>
-				      <tr class="info" align="center">
-				      	<td>
-				        	<a href="#"
-				        	ng-click="">
-				        	<span style="font-size:14px;" class="glyphicon glyphicon-zoom-in">
-				          	</span>
-				          	</a>
-				        </td>
-				        <th>Name</th>
-				        <th>Email</th>
-				        <th>Age</th>
-				        <th>Friend name</th>
-				        <th>Best Brother</th>
-				        <th>Number of Brothers</th>
-				      </tr>
-				      </thead>
-				      <tbody>
-				     <tr ng-click="selectBrother(brother)" ng-repeat="brother in bros | filter:search_text | orderBy:sort_value track by $index">
-				        <td class="brother-thumbs"><img src="{{brother.imageUrl}}"</td>
-				        <td>{{brother.name}}</td>
-				        <td>{{brother.email}}</td>
-				        <td>{{brother.age}}</td>
-				        <td>{{brother.friend.name}}</td>
-				        <td>{{favoriteBrother}}</td>
-				        <td>{{brother.listBro.length}}</td>
-				     </tr>
-				     <tr class="info" >
-				      <td align="center" colspan="7">
-				     	<pagination 
-					      		boundary-links="true" 
-					      		ng-model="currentPage" 
-					      		total-items="totalItems" 
-					      		items-per-page="entryLimit"
-					            ss="pagination-sm" 
-					            previous-text="&lsaquo;" 
-					            next-text="&rsaquo;" 
-					            first-text="&laquo;" 
-					            last-text="&raquo;" 
-					            rotate="false"
-					            max-size="4"
-					            style="
-					            	margin-top:0px;
-					            	margin-bottom: 0px; 
-					            	margin-left:2px;">
-					      	</pagination> 
-					      	<nav>
-					      		<ul class="pager">
-					      			<li class="disabled"><a href="#">Previous</a></li>
-					      			<li class="disabled"><a href="#">Next</a></li>
-					      		</ul>
-					      	</nav>
-					  </td>
-				     </tr> 
-				     </tbody>
-				    </table>
-	                 -->
-
-
 		</div>	
 
    </form>
