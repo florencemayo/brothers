@@ -26,8 +26,10 @@ myModule.component('brotherDetails',{
                var listBros_current = [];
                $scope.updateListBrothers = function(brother){
                     //add datas to an object
-            		brother.imageUrl="img/brother2.jpg";
-	        		brother.id=brothers.length;
+            		var imageArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+			        var rand = imageArray[Math.floor(Math.random() * imageArray.length)]; 
+			        brother.imageUrl="img/brother"+rand+".jpg";
+			        brother.id=brothers.length;
 	        		//initiate an empty list of brothers
 			  		brother.listBrothers = [];
 			  		
@@ -98,8 +100,27 @@ myModule.component('brotherDetails',{
 						});
 					});
 				};
+
+				//settings for a pagination bar
+				$scope.totalItems = brothers.length;
+				$scope.currentPage = 1;
+				$scope.maxSize = 4;
+				$scope.itemsPerPage = 4;
 			}
 		]
+});
+
+/*
+**FILTER
+*/
+myModule.filter('pagesFilter', function(){
+	return function(input, currentPage, pageSize){
+		if(angular.isArray(input)){
+			var start = (currentPage -1)*pageSize;
+			var end = currentPage*pageSize;
+			return input.slice(start, end);
+		}
+	};
 });
 
 

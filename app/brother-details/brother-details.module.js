@@ -3,4 +3,7 @@
 angular.
  	module('brotherDetails',
  	       ['ngRoute',
- 	        'core.brother']);
+ 	        'core.brother',
+ 	        'ui.bootstrap'
+ 	        ]
+);

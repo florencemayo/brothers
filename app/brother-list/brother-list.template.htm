@@ -1,7 +1,9 @@
 <div class="container-fluid">
 	<div class="row">
 		<!--create a search query -->
-		<div class="col-md-6 search-query">
+        
+
+		<div class="col-md-4 search-query">
 			<div class="input-group">
 				<span class="input-group-addon">Search </span> 
 				<input ng-model="search_text" class="form-control" 
@@ -9,54 +11,54 @@
 			</div>
 		</div>
 		<!--create a sort area -->
-		<div class="col-md-6 sort-form">
+		<div class="col-md-5 sort-form">
 			<div class="input-group">
 				<span class="input-group-addon">Sort by </span>
 				<select ng-model="sort_value" class="form-control">
 					<option value="name">Alphabetical</option> <!-- name-->
-					<option value="email">Best brothers</option> <!-- best borthers-->
+					<option value="favoriteBrother.name">Best brothers</option> <!-- best borthers-->
 					<option value="listBrothers">Number of Borthers</option> <!-- number of brothers-->
 				</select>
 			</div>
 		</div>
+
+		<div class="col-md-3">
+	        <button class="addButton btn btn-info" 
+		        ng-click="addBrother =! addBrother" 
+		        ng-show="!addBrother" >ADD BROTHER
+		    </button>
+		</div>
 	</div>
 
-   <div class="row">	
-	<!-- Two buttons to show/hide add a brother panel-->
-	<button class="size-button btn btn-info" 
-	        ng-click="addBrother =! addBrother" 
-	        ng-show="!addBrother" >ADD BROTHER
-	</button>
-	</div>
-	
 	<form editable-form class="form-horizontal" role="form">
-			<div class="container">
-				<div class="listing-form-row "> 
+			<div class="listing-form-row"> 
                     <!--SHOW THE ADD WINDOW WHEN ADD BUTTON CLICKED BEGIN-->
 					<!-- ADD A NEW OBJECT __BEGIN-->	
 				    <div ng-show="addBrother ">
 						<h3> ADD NEW BROTHER </h3>
 					    <div class="row spacing">
 							<div class="input-group">
-								<span class="input-group-addon" for="name"><b>Name</b></span>
+								<span class="input-group-addon" for="name" id="sizing-addon1"><b>Name</b></span>
 								<input 
 									type="name" 
 									class="form-control" 
 									id="firstname" 
 									placeholder="Enter full name"
-									ng-model="newBrother.name" />
+									ng-model="newBrother.name"
+									aria-describedby="sizing-addon1"/>
 							</div>			
 						</div>
 						
 						<div class="row spacing">
 							<div class="input-group">
-								<span class="input-group-addon" for="age"><b>Age</b></span>
+								<span class="input-group-addon" for="age" id="sizing-addon1"><b>Age</b></span>
 								<input 
 									type="age" 
 									class="form-control" 
 									id="age" 
 									placeholder="Enter age"
-									ng-model="newBrother.age" />
+									ng-model="newBrother.age"
+									aria-describedby="sizing-addon1"/>
 							</div>
 					    </div>
 					        
@@ -96,9 +98,7 @@
 							</div>
 					   	</div>
 
-				  		</br><pre> {{newBrother | json}}</pre>
-
-					    <button 
+				  		<button 
 					    	type="save" 
 					    	class="size-button btn btn-info"
 					    	ng-click="inputBrother(newBrother)"
@@ -110,11 +110,10 @@
 			        			ng-show="addBrother">CLOSE
 						</button>
 				    </div>
-               </div>
-			</div>   
+            </div>
+			 
 			
-		<div ng-show="bros.length > 0" 
-			 style="padding:2px;">
+		<div ng-show="bros.length > 0">
 				<ul class="brothers">
 		 			<li class="thumbnail" ng-repeat="brother in bros | filter:search_text | orderBy:sort_value track by $index">
 			  			<a href="#!/brothers/{{brother.id}}" class="thumb">
@@ -134,9 +133,8 @@
 				 			<b>Friend name : </b>
 				 			<i>{{brother.friend != null ? brother.friend.name : 'Not available'}}</i>
 				 			<br/>
-				 			<b ng-if="favoriteBrother.name != null">
-				 				Favorite Brother :</b><i>
-				 				{{favoriteBrother.name}}</i> 
+				 			<b>Favorite Brother :</b>
+				 			<i>{{ brother.favoriteBrother != null ? brother.favoriteBrother.name : 'Not available'}}</i> 
 			 			</div><br/>
 	 			        <button class="size-button btn btn-info" 
 	 			        ng-click="showDetails =! showDetails"

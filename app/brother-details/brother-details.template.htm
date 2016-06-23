@@ -1,3 +1,4 @@
+<div class="container-fluid">
 <form editable-form name="editableForm" onaftersave="updateBrother(brother)">
 	<div style="margin-top: 4px; margin-bottom:4px;">
 
@@ -174,6 +175,7 @@
 				type="nameFriend" 
 				class="form-control" 
 				id="nameFriend" 
+				placeholder="Enter name of friend"
 				ng-model="newBrother.friend.name"/>
 		</div>
 
@@ -182,12 +184,9 @@
 			<input
 				type="emailFriend" 
 				class="form-control" 
-				id="emailFriend" 
+				id="emailFriend"
+				placeholder="Enter email of friend" 
 				ng-model="newBrother.friend.email"/>
-		</div>
-
-		<div> 
-			<pre> {{newBrother | json}}</pre>       
 		</div>
 
 		
@@ -208,7 +207,7 @@
 	</div>
 	
 	<!-- SHOW BROTHERS OF A BR0THER-->
-	<table class="table table-hover spacing" 
+	<table class="table table-hover brothers spacing" 
 	  		 style="font-size:large" 
 	  		 align="center"
 	  		 ng-show="brother.listBrothers.length > 0">
@@ -227,46 +226,33 @@
 	    <th>Email</th>
 	    <th>Age</th>
 	    <th>Friend name</th>
-	    <th>Best Brother</th>
-	    <th>Number of Brothers</th>
 	  </tr>
 	  </thead>
 	  <tbody>
-	 <tr ng-click="favoriteBrother(brother)" ng-repeat="brother in brother.listBrothers">
+	 <tr ng-click="favoriteBrother(brother)" ng-repeat="brother in brother.listBrothers | pagesFilter : currentPage : itemsPerPage">
 	    <td class="brother-thumbs"><img src="{{brother.imageUrl}}"</td>
 	    <td>{{brother.name}}</td>
 	    <td>{{brother.email}}</td>
 	    <td>{{brother.age}}</td>
 	    <td>{{brother.friend.name}}</td>
-	    <td>{{brother.favoriteBrother.name}}</td>
-	    <td>{{brother.listBro.length}}</td>
 	 </tr>
-	 <tr class="info" >
-	  <td align="center" colspan="7">
-	 	<pagination 
-	      		boundary-links="true" 
-	      		ng-model="currentPage" 
-	      		total-items="totalItems" 
-	      		items-per-page="entryLimit"
-	            ss="pagination-sm" 
-	            previous-text="&lsaquo;" 
-	            next-text="&rsaquo;" 
-	            first-text="&laquo;" 
-	            last-text="&raquo;" 
-	            rotate="false"
-	            max-size="4">
-	      	</pagination> 
-	      	<nav>
-	      		<ul class="pager">
-	      			<li class="disabled"><a href="#">Previous</a></li>
-	      			<li class="disabled"><a href="#">Next</a></li>
-	      		</ul>
-	      	</nav>
-	  </td>
-	 </tr> 
+	 <!--<tr class="info" >
+	  <td colspan="7"> -->
+			 <!--<uib-pager
+			   total-items="totalItems"
+			   ng-model="currentPage"
+			   items-per-page="itemsPerPage"
+			   max-size="maxSize">
+			</uib-pager -->			 
+			<pagination  
+			        total-items="totalItems" 
+			        ng-model="currentPage" 
+			        items-per-page="itemsPerPage"
+			        max-size="maxSize">
+   			</pagination>	
+	  <!--</td>
+	 </tr>-->
 	 </tbody>
-	</table>
-
-	
+	</table>	
 </form>	
-       
+</div>       

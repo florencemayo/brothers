@@ -6,9 +6,9 @@ var myApp = angular.module('ng-brothers',[
 				  		 'core',
 				       	 'ngMaterial',
 				       	 'xeditable',
+				       	 'ui.bootstrap',
 				  		 'brotherDetails',
-				  		 'brotherList',
-				  		 'brotherManage'
+				  		 'brotherList'
 				      ]
                    ).run(function(editableOptions){
                    		//set a boostrap them, also 'bs2' or 'default'
