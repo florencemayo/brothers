@@ -1,23 +1,26 @@
 <div class="container-fluid">
 	<div class="row">
-		<!--create a search query -->
-        
-
-		<div class="col-md-4 search-query">
+		
+		<!--define a search query -->
+        <div class="col-md-4 search-query">
 			<div class="input-group">
 				<span class="input-group-addon">Search </span> 
 				<input ng-model="search_text" class="form-control" 
 				ng-model-options = "{debounce :500}"/>
 			</div>
 		</div>
-		<!--create a sort area -->
+		
+		<!--define sort types -->
 		<div class="col-md-5 sort-form">
 			<div class="input-group">
 				<span class="input-group-addon">Sort by </span>
 				<select ng-model="sort_value" class="form-control">
-					<option value="name">Alphabetical</option> <!-- name-->
-					<option value="favoriteBrother.name">Best brothers</option> <!-- best borthers-->
-					<option value="listBrothers">Number of Borthers</option> <!-- number of brothers-->
+					<!-- name-->
+					<option value="name">Alphabetical</option>
+					<!-- best borthers-->
+					<option value="bestBrother.name">Best brothers</option>
+					<!-- number of brothers--> 
+					<option value="listBrothers">Number of Borthers</option> 
 				</select>
 			</div>
 		</div>
@@ -25,7 +28,7 @@
 		<div class="col-md-3">
 	        <button class="addButton btn btn-info" 
 		        ng-click="addBrother =! addBrother" 
-		        ng-show="!addBrother" >ADD BROTHER
+		        ng-show="addBrother" >ADD BROTHER
 		    </button>
 		</div>
 	</div>
@@ -34,7 +37,7 @@
 			<div class="listing-form-row"> 
                     <!--SHOW THE ADD WINDOW WHEN ADD BUTTON CLICKED BEGIN-->
 					<!-- ADD A NEW OBJECT __BEGIN-->	
-				    <div ng-show="addBrother ">
+				    <div ng-show="!addBrother ">
 						<h3> ADD NEW BROTHER </h3>
 					    <div class="row spacing">
 							<div class="input-group">
@@ -101,51 +104,63 @@
 				  		<button 
 					    	type="save" 
 					    	class="size-button btn btn-info"
-					    	ng-click="inputBrother(newBrother)"
-					    	ng-show="!editBrother">SAVE
+					    	ng-click="addBrother(newBrother)"
+					    	ng-show="!addBrother">SAVE
 					    </button>
 
 					    <button class="size-button btn btn-warning" 
 			        			ng-click="addBrother =! addBrother" 
-			        			ng-show="addBrother">CLOSE
+			        			ng-show="!addBrother">CANCEL
 						</button>
 				    </div>
             </div>
 			 
 			
 		<div ng-show="bros.length > 0">
-				<ul class="brothers">
-		 			<li class="thumbnail" ng-repeat="brother in bros | filter:search_text | orderBy:sort_value track by $index">
-			  			<a href="#!/brothers/{{brother.id}}" class="thumb">
-			  			  <img ng-src="{{brother.imageUrl}}" alt="{{brother.name}}" />
-			  			</a>
-			 			<a href="#!/brothers/{{brother.id}}"><b>Name :</b>
-			 			 <i>{{brother.name}}</i></a>
-		 			     <br/>
-		 				<!-- Two buttows to show/hide more details--><br/>
-			 			<div ng-show="showDetails">
-				 			<b>Email :</b><i> 
-				 			{{brother.email != null ? brother.email : 'Not available'}}
-				 			<br/>
-				 			<b>Number of Brothers :</b>
-				 			<i>{{brother.listBrothers.length > 0 ?brother.listBrothers.length : 0}}</i>
-				 			<br/>
-				 			<b>Friend name : </b>
-				 			<i>{{brother.friend != null ? brother.friend.name : 'Not available'}}</i>
-				 			<br/>
-				 			<b>Favorite Brother :</b>
-				 			<i>{{ brother.favoriteBrother != null ? brother.favoriteBrother.name : 'Not available'}}</i> 
-			 			</div><br/>
-	 			        <button class="size-button btn btn-info" 
-	 			        ng-click="showDetails =! showDetails"
-	 			        ng-show="!showDetails">VIEW DETAILS
-				        </button>
-				        <button class="size-button btn btn-warning" 
-				        ng-click="showDetails =! showDetails"
-				        ng-show="showDetails">CLOSE
-				        </button>
+			<ul class="brothers">
+				<div class="row">
+		 			<li ng-repeat="brother in bros | filter:search_text | orderBy:sort_value track by $index">
+		 				<div class="col-sm-5 thumbnail">
+		 					<a href="#!/brothers/{{brother.id}}">
+					  			  <img ng-src="{{brother.imageUrl}}" 
+					  			  	   alt="{{brother.name}}" />
+					  		</a>
+						</div>
+						<div class="col-sm-7">
+				 			<div>
+					 			<a class="name-link" href="#!/brothers/{{brother.id}}">
+					  			  <b>Name :</b><i>{{ brother.name}}</i>
+					  			</a>
+							</div>
+				 			<div ng-show="showDetails">
+					 			<b>Email :</b><i> 
+					 			{{brother.email != null ? brother.email : 'Not available'}}</i>
+					 			<br/>
+					 			<b>Number of Brothers :</b>
+					 			<i>{{brother.listBrothers.length > 0 ?brother.listBrothers.length : 0}}</i>
+					 			<br/>
+					 			<b>Name of friend : </b>
+					 			<i>{{brother.friend != null ? brother.friend.name : 'Not available'}}</i>
+					 			<br/>
+					 			<b>Best Brother :</b>
+					 			<i>{{ brother.bestBrother != null ? brother.bestBrother.name : 'Not available'}}</i> 
+					 			<br/>
+				 			</div>
+				 			<!-- Two buttows to show/hide more details-->
+				 			<div class="clickDetails">
+			 			        <button class="btn btn-info" 
+					 			        ng-click="showDetails =! showDetails"
+					 			        ng-show="!showDetails">VIEW DETAILS
+						        </button>
+						        <button class="btn btn-warning" 
+								        ng-click="showDetails =! showDetails"
+								        ng-show="showDetails">CANCEL
+						        </button>
+					    	</div>
+			 			</div>
 					</li>
-	 			</ul>
+				</div>
+	 		</ul>
 		</div>	
 
    </form>

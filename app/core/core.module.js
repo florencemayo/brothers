@@ -1,3 +1,3 @@
-'use strict';
+/*'use strict';
 
-angular.module('core',['core.brother']);
+angular.module('core',['core.brother']);*/

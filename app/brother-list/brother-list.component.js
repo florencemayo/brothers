@@ -5,103 +5,111 @@ var myModule = angular.module('brotherList');
 myModule.component('brotherList', {
 		templateUrl: 'brother-list/brother-list.template.htm',
 		controller: ['$scope', '$localstorage',
-				function BrotherListController($scope, $localstorage){
-				 	//set the initial variable to sort
-				 	$scope.sort_value='age';
+						function BrotherListController($scope, $localstorage){
+						 	//set the initial variable to sort
+						 	$scope.sort_value='age';
 
-				 	$scope.newBrother = {};
+						 	$scope.newBrother = {};
 
-				 	$scope.listBro =  []; 
+						 	$scope.listBro =  []; 
 
-				 	//$localstorage.setObject("bros",[]);
+						 	//$localstorage.setObject("bros",[]);
 
-				 	//initialize bros
-				 	$scope.bros=$localstorage.getObject('bros').length> 0 ?$localstorage.getObject('bros'):[];
-                    //function to add brother details
-			        $scope.inputBrother = function(newBrother){
-			         	var imageArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-			         	var rand = imageArray[Math.floor(Math.random() * imageArray.length)]; 
-			         	newBrother.imageUrl="img/brother"+rand+".jpg";
-			         	newBrother.id=$scope.bros.length;
-						$scope.bros.push(newBrother);
+						 	//initialize bros
+						 	$scope.bros=$localstorage.getObject('bros').length> 0 ?$localstorage.getObject('bros'):[];
+		                    
+		                    //function to add a new brother
+					        $scope.addBrother = function(newBrother){
+					         	//get a random image from an array
+					         	var imageArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+					         	var rand = imageArray[Math.floor(Math.random() * imageArray.length)]; 
+					         	
+					         	newBrother.imageUrl="img/brother"+rand+".jpg";
+					         	newBrother.id=$scope.bros.length;
+								$scope.bros.push(newBrother);
 
-						//initiate an empty list of brothers
-			  			newBrother.listBrothers = [];
-					    if($scope.bros.length>0) {$localstorage.setObject('bros',$scope.bros);}
-			  			
-			  			console.log($localstorage.getObject('bros'));
-			         	$scope.addBrother = false;
-			         	//reset the input fields
-			         	$scope.newBrother = {};
-			         };
+								//initiate an empty list of brothers
+					  			newBrother.listBrothers = [];
 
-			        $scope.saveEditedBrother = function(brother){
-			         	var index = $scope.bros.indexOf(brother);
-						$scope.editBrother =false;
-			         	$scope.bros[index]=$scope.editedBrother;
-			         	if($scope.bros.length>0) {$localstorage.setObject('bros',$scope.bros);}
-                        $scope.addABroToBro = false;
-			         	$scope.editedBrother ={};
-			        };
+					  			//add a new object of brother to a local storage
+							    if($scope.bros.length>0) {$localstorage.setObject('bros',$scope.bros);}
+					  			
+					  			//TESTING
+					  			console.log($localstorage.getObject('bros'));
+					         	
+					         	$scope.addBrother = false;
+					         	//reset the input fields
+					         	$scope.newBrother = {};
+					         };
 
-					$scope.deleteBrother= function(brother){
-						//get the indexof the listing in an array
-						var index = $scope.bros.indexOf(brother);
-						$scope.bros.splice(index, 1);
-						$scope.editedBrother ={};
-						$scope.editBrother =false;
-						if($scope.bros.length>0) {$localstorage.setObject('bros',$scope.bros);}
-			  		};
+					        /*$scope.saveEditedBrother = function(brother){
+					         	var index = $scope.bros.indexOf(brother);
+								$scope.editBrother =false;
+					         	$scope.bros[index]=$scope.editedBrother;
+					         	if($scope.bros.length>0) {$localstorage.setObject('bros',$scope.bros);}
+		                        $scope.addABroToBro = false;
+					         	$scope.editedBrother ={};
+					        };*/
 
-			  		$scope.updateListBro = function(brother){
-                     //var index = $scope.bros.indexOf(brother);
-                     //making sure we are not adding the same brother
-                     //editedBrother <> nextBro
-                     var i = 0;
-                     if (brother.id === $scope.nextBro.id) {
-                     	alert("IMPOSSIBLE");
-                     } else {
-                     	    //check if a bro is already in a list of bros
-	                     	if ($scope.listBro.length>0){
-	                        	while(i < $scope.listBro.length) {
-	                        		if ($scope.nextBro.id === $scope.listBro[i].id) { 
-	                        			alert("DUPLICATE");
-	                        			break;
-	                        		}
-	                        		i++;
-	                        	}
-	                        } 
+							/*$scope.deleteBrother= function(brother){
+								//get the indexof the listing in an array
+								var index = $scope.bros.indexOf(brother);
+								$scope.bros.splice(index, 1);
+								$scope.editedBrother ={};
+								$scope.editBrother =false;
+								if($scope.bros.length>0) {$localstorage.setObject('bros',$scope.bros);}
+					  		};*/
 
-	                        if (i === $scope.listBro.length || $scope.listBro.length === 0) {
-			                        	//Add a bro to a list of bro
-				                        $scope.listBro.push($scope.nextBro);
+					  		/*$scope.updateListBro = function(brother){
+		                     //var index = $scope.bros.indexOf(brother);
+		                     //making sure we are not adding the same brother
+		                     //editedBrother <> nextBro
+		                     var i = 0;
+		                     if (brother.id === $scope.nextBro.id) {
+		                     	alert("IMPOSSIBLE");
+		                     } else {
+		                     	    //check if a bro is already in a list of bros
+			                     	if ($scope.listBro.length>0){
+			                        	while(i < $scope.listBro.length) {
+			                        		if ($scope.nextBro.id === $scope.listBro[i].id) { 
+			                        			alert("DUPLICATE");
+			                        			break;
+			                        		}
+			                        		i++;
+			                        	}
+			                        } 
 
-				                     	//replace the old list with the current list
-				                     	$scope.editedBrother.listBro =  $scope.listBro;
-				                     	
-				                     	$scope.saveEditedBrother(brother);
-						    } 
-                    }
-                   };
+			                        if (i === $scope.listBro.length || $scope.listBro.length === 0) {
+					                        	//Add a bro to a list of bro
+						                        $scope.listBro.push($scope.nextBro);
 
-                   $scope.unfriend = function (brother) {
-                        if (brother.friend != null)
-                        {
-                        	brother.friend= "";
-                            $scope.saveEditedBrother(brother);
-                        }
-					};
-			}
-		]
-});
+						                     	//replace the old list with the current list
+						                     	$scope.editedBrother.listBro =  $scope.listBro;
+						                     	
+						                     	$scope.saveEditedBrother(brother);
+								    } 
+		                    }
+		                   };*/
 
-//factory that allows to share the data between the services
-myModule.factory('$List', 
-	[
-	'$localstorage', function($localstorage) {
-	var list=$localstorage.getObject('bros').length> 0 ?$localstorage.getObject('bros'):[];
-		return  {
-			listBrothers : list
+		                   /*$scope.unfriend = function (brother) {
+		                        if (brother.friend != null)
+		                        {
+		                        	brother.friend= "";
+		                            $scope.saveEditedBrother(brother);
+		                        }
+							};*/
+						}
+					]
 		}
-	}
-]);
+);
+
+/*/factory that allows to share the data between the services
+myModule.factory('$List', 
+				['$localstorage', function($localstorage) {
+					var list=$localstorage.getObject('bros').length> 0 ?$localstorage.getObject('bros'):[];
+					return  {
+								listBrothers : list
+							}
+					}
+				]
+);*/

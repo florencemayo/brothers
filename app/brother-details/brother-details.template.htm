@@ -8,15 +8,15 @@
 		<!-- IMAGE-->
 		<div class="col-sm-4">
 			<div class="thumbnail">
-			<img  ng-src="{{brother.imageUrl}}" />
-		   </div>
+				<img ng-src="{{brother.imageUrl}}" />
+		    </div>
 		   <div>
 		   	<!-- New brother-->
-			  		<button 
-						class="size-button btn btn-primary" 
-				        ng-click="addBrothers =! addBrothers" 
-				        ng-show="!addBrothers" >NEW BROTHER
-					</button>
+		  		<button 
+					class="size-button btn btn-primary" 
+			        ng-click="addBrothers =! addBrothers" 
+			        ng-show="!addBrothers" >NEW BROTHER
+				</button>
 		   </div>	
 	 	</div>
 		
@@ -67,10 +67,10 @@
 		  <li class="list-group-item list-group-item-info">
 		  		<div class="row">
 		  			<div class="col-sm-6">
-		  				<span><b>Favorite brother </b></span> 
+		  				<span><b>Best brother </b></span> 
 		  			</div>
 		  			<div class="col-sm-6">	
-		  				<span editable-text="brother.favoriteBrother.name">{{brother.favoriteBrother.name}}</span>
+		  				<span editable-text="brother.bestBrother.name">{{brother.bestBrother.name}}</span>
 		  			</div>
 		  		</div>	
 		  </li>
@@ -229,8 +229,8 @@
 	  </tr>
 	  </thead>
 	  <tbody>
-	 <tr ng-click="favoriteBrother(brother)" ng-repeat="brother in brother.listBrothers | pagesFilter : currentPage : itemsPerPage">
-	    <td class="brother-thumbs"><img src="{{brother.imageUrl}}"</td>
+	 <tr ng-click="bestBrother(brother)" ng-repeat="brother in brother.listBrothers | pagesFilter : currentPage : itemsPerPage">
+	    <td><img src="{{brother.imageUrl}}"</td>
 	    <td>{{brother.name}}</td>
 	    <td>{{brother.email}}</td>
 	    <td>{{brother.age}}</td>

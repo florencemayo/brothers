@@ -25,11 +25,13 @@ myModule.component('brotherDetails',{
                //get the current list of brothers
                var listBros_current = [];
                $scope.updateListBrothers = function(brother){
-                    //add datas to an object
+                    //get a random image from an array
             		var imageArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 			        var rand = imageArray[Math.floor(Math.random() * imageArray.length)]; 
 			        brother.imageUrl="img/brother"+rand+".jpg";
+			        
 			        brother.id=brothers.length;
+	        		
 	        		//initiate an empty list of brothers
 			  		brother.listBrothers = [];
 			  		
@@ -39,7 +41,11 @@ myModule.component('brotherDetails',{
 					
 					listBros_current = $scope.brother.listBrothers;
 					
-					listBros_current.push(brother);
+					if (brother.name !== null 	&& brother.email !== null && brother.age !== null) {
+						listBros_current.push(brother);
+					} else {
+						$scope.submitAddBrother();
+					}
 					
 					Brother.listBrothers = listBros_current;
 					
@@ -53,9 +59,9 @@ myModule.component('brotherDetails',{
 				  };
 
 
-                //SET A FAVORITE BROTHER
-                $scope.favoriteBrother = function(brother){
-			  			$scope.brother.favoriteBrother =brother;
+                //SET A BEST BROTHER
+                $scope.bestBrother = function(brother){
+			  			$scope.brother.bestBrother =brother;
 			  			$scope.updateBrother(brother);
 			    }
 
@@ -64,14 +70,26 @@ myModule.component('brotherDetails',{
                 	if ($scope.brother.friend != null) {
                 		$scope.brother.friend = {};
 						$scope.updateBrother($scope.brother);
+                	} else {
+                		$scope.submitUnfriend();
                 	}
                 }
 
-                //DELETE A BROTHER
-                $scope.submit = function(){
+                //ALERTS
+                $scope.submitDelete = function(){
                 	alert("Brother deleted successfully");
 				};
 
+				$scope.submitUnfriend = function(){
+					alert("OPPS, YOU HAVE NO FRIENDS");
+				}
+
+				//VERIFY
+				$scope.submitAddBrother = function(){
+					alert("The fields need values");
+				}
+
+                //DELETE A BROTHER
                 $scope.deleteBrother= function(event,brother){
 					//set a reminder
             		var confirm = $mdDialog.confirm()
@@ -95,7 +113,7 @@ myModule.component('brotherDetails',{
 							$scope.$apply(function(){
 							$location.path("/brothers/app/#!/brothers");
 							//Show a notification
-							$scope.submit();
+							$scope.submitDelete();
     					    });
 						});
 					});
