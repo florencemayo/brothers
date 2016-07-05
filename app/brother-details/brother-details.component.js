@@ -130,6 +130,7 @@ myModule.component('brotherDetails',{
 
 /*
 **FILTER
+**MEANT FOR PAGINATION BUT NOT WORKING AT THE MOMENT
 */
 myModule.filter('pagesFilter', function(){
 	return function(input, currentPage, pageSize){
